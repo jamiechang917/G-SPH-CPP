@@ -10,14 +10,14 @@ void save_vector_1D(string filepath, vector<double> vec, bool append_mode) {
     if (append_mode) {
         ofstream ofs(filepath, ios::app); // append mode
         for (const auto &e: vec) {
-            ofs << e << " ";
+            ofs << std::fixed << std::setprecision(OUTPUT_PRECISION) << e << " ";
         }
         ofs << "\n";
     }
     else {
         ofstream ofs(filepath); // this will clean the file first
         for (const auto &e: vec) {
-            ofs << e << " ";
+            ofs << std::fixed << std::setprecision(OUTPUT_PRECISION) << e << " ";
         }
         ofs << "\n";
     }
@@ -36,7 +36,7 @@ void save_vector_2D(string filepath, vector<vector<double> > vec, bool append_mo
         ofstream ofs(filepath, ios::app); // append mode
         for (const auto &row: vec) {
             for (const auto &e: row) {
-                ofs << e << " ";    
+                ofs << std::fixed << std::setprecision(OUTPUT_PRECISION) << e << " ";    
             }
             ofs << "\n";   
         }
@@ -45,7 +45,7 @@ void save_vector_2D(string filepath, vector<vector<double> > vec, bool append_mo
         ofstream ofs(filepath); // this will clean the file first
         for (const auto &row: vec) {
             for (const auto &e: row) {
-                ofs << e << " ";    
+                ofs << std::fixed << std::setprecision(OUTPUT_PRECISION) << e << " ";    
             }
             ofs << "\n";   
         }
@@ -100,10 +100,10 @@ void save_particles(string filepath, vector<Particles*> particles) {
     ofs << particles.size() << endl; // First line is the number of particles.
     for (const auto particle : particles) {
         ofs << particle->id << " ";
-        ofs << particle->m << " ";
-        ofs << particle->pos[0] << " " << particle->pos[1] << " " << particle->pos[2] << " ";
-        ofs << particle->vel[0] << " " << particle->vel[1] << " " << particle->vel[2] << " ";
-        ofs << particle->acc[0] << " " << particle->acc[1] << " " << particle->acc[2] << " ";
+        ofs << std::fixed << std::setprecision(OUTPUT_PRECISION) << particle->m << " ";
+        ofs << std::fixed << std::setprecision(OUTPUT_PRECISION) << particle->pos[0] << " " << particle->pos[1] << " " << particle->pos[2] << " ";
+        ofs << std::fixed << std::setprecision(OUTPUT_PRECISION) << particle->vel[0] << " " << particle->vel[1] << " " << particle->vel[2] << " ";
+        ofs << std::fixed << std::setprecision(OUTPUT_PRECISION) << particle->acc[0] << " " << particle->acc[1] << " " << particle->acc[2] << " ";
         ofs << endl;
     }
     return;
@@ -147,19 +147,19 @@ vector<Particles*> read_particles(string filepath) {
     return *particles;
 }
 
-void save_cells(BHNode* node_ptr) {
+void save_cells(string filepath, BHNode* node_ptr) {
     if (node_ptr->isroot) {
-        ofstream ofs("cells.txt");
+        ofstream ofs(filepath);
         ofs << "";
     }
     if (node_ptr->particles.size() > 1) {
         for (BHNode* child : node_ptr->children_nodes) {
-            save_cells(child);
+            save_cells(filepath, child);
         }
     }
     else {
-        ofstream ofs("cells.txt", ios::app);
-        ofs << node_ptr->cell_size << " " << node_ptr->cell_pos[0] << " " << node_ptr->cell_pos[1] << " " << node_ptr->cell_pos[2] << endl;
+        ofstream ofs(filepath, ios::app);
+        ofs << std::fixed << std::setprecision(OUTPUT_PRECISION) << node_ptr->cell_size << " " << node_ptr->cell_pos[0] << " " << node_ptr->cell_pos[1] << " " << node_ptr->cell_pos[2] << endl;
     }
     return;
 }

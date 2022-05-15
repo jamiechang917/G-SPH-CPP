@@ -162,7 +162,3 @@ void build_tree(BHNode* node_ptr) {
     }
     return;
 }
-
-void calculate_gravity(BHNode* root_ptr) {
-    
-}

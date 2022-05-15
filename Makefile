@@ -1,4 +1,4 @@
-OBJ = main.o particles.o fileIO.o randoms.o BHtree.o vector_ops.o
+OBJ = main.o particles.o fileIO.o randoms.o BHtree.o vector_ops.o force.o
 CC = g++
 CFLAGS = -Wall -O2 -g
 LFLAGS = -lm
@@ -25,6 +25,9 @@ BHtree.o: BHtree.cpp BHtree.h
 
 vector_ops.o: vector_ops.cpp vector_ops.h
 	$(CC) $(CFLAGS) -c vector_ops.cpp
+
+force.o: force.cpp force.h
+	$(CC) $(CFLAGS) -c force.cpp
 
 .PHONY: clean
 clean:

@@ -49,3 +49,12 @@ void print_vec1D(vector<double> vec) {
     }
     cout << endl;
 }
+
+
+double vec1D_norm(vector<double> vec) {
+    double result = 0.0;
+    for (double e : vec) {
+        result += pow(e, 2.);
+    }
+    return sqrt(result);
+}

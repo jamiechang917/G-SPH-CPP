@@ -3,7 +3,9 @@
 
 #include <vector>
 #include <algorithm>
+#include <math.h>
 // #include <matplotlibcpp.h>
+#include "parameters.h"
 #include "particles.h"
 #include "vector_ops.h"
 using namespace std;
@@ -54,8 +56,5 @@ BHNode create_root(vector<Particles*> particles);
 
 void build_tree(BHNode* node_ptr);
 // void delete_BHtree(BHNode* root);
-
-void calculate_gravity(BHNode* root_ptr);
-
 
 #endif

@@ -26,8 +26,8 @@ vector<Particles*> generate_random_particles(long unsigned int N, double lower_b
             uniform_real_distribution<> dist(lower_bound, upper_bound);
             double t = dist(gen);
             pos->push_back(t);
-            vel->push_back(t);
-            acc->push_back(t);
+            vel->push_back(0.0);
+            acc->push_back(0.0);
         }
         Particles* particle = new Particles(id, m, *pos, *vel, *acc);
         particles->push_back(particle);

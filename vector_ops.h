@@ -2,6 +2,7 @@
 #define VECTOR_OPS_H
 #include <vector>
 #include <algorithm>
+#include <math.h>
 using namespace std;
 
 vector<double> vec1D_add(vector<double> a, vector<double> b);
@@ -15,5 +16,7 @@ double vec1D_max(vector<double> vec);
 double vec1D_min(vector<double> vec);
 
 void print_vec1D(vector<double> vec);
+
+double vec1D_norm(vector<double> vec);
 
 #endif
