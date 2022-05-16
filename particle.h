@@ -1,23 +1,20 @@
-#ifndef PARTICLES
-#define PARTICLES
-
-#include <vector>
-#include "randoms.h"
-#include "vector_ops.h"
+#pragma once
+#include "myvector.h"
+#include <iostream>
+#include <random>
 using namespace std;
 
-class Particles {
-    public:
-        Particles(long int id, double m, vector<double> pos, vector<double> vel, vector<double> acc); // init function
-        long int id; // id
-        double m; // mass
-        vector<double> pos; // position
-        vector<double> vel; // velocity
-        vector<double> acc; // acceleration
+class Particle {
+  public:
+    Particle(long id, double mass); // initialization function
+    long id;
+    double mass;
+    vec3d pos;
+    vec3d vel;
+    vec3d acc;
+    void info();                                        // show information
+    void setPosition(vec3d pos);                        // set postion
+    void setVelocity(vec3d vel);                        // set velocity
+    void setAccleration(vec3d vel);                     // set accleration
+    void setRandomPosition(double lower, double upper); // set random position
 };
-
-vector<Particles*> generate_random_particles(long unsigned int N, double lower_bound, double upper_bound);
-
-
-
-#endif

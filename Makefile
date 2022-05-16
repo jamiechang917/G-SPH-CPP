@@ -1,9 +1,7 @@
-OBJ = main.o particles.o fileIO.o randoms.o BHtree.o vector_ops.o force.o
+OBJ = main.o myvector.o particle.o tree.o force.o updater.o fileIO.o
 CC = g++
-CFLAGS = -Wall -O2 -g
+CFLAGS = -Wall -Wextra -O2 -g
 LFLAGS = -lm
-# CFLAGS = -Wall -O2 -I/usr/include/python3.8 -g
-# LFLAGS = -lm -lpython3.8
 
 program: $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) -o program  $(LFLAGS)
@@ -11,23 +9,26 @@ program: $(OBJ)
 main.o: main.cpp
 	$(CC) $(CFLAGS) -c main.cpp
 
-particles.o: particles.cpp particles.h
-	$(CC) $(CFLAGS) -c particles.cpp
+myvector.o: myvector.cpp
+	$(CC) $(CFLAGS) -c myvector.cpp
 
-fileIO.o: fileIO.cpp fileIO.h
+particle.o: particle.cpp
+	$(CC) $(CFLAGS) -c particle.cpp
+
+tree.o: tree.cpp
+	$(CC) $(CFLAGS) -c tree.cpp
+
+force.o: force.cpp
+	$(CC) $(CFLAGS) -c force.cpp
+
+updater.o: updater.cpp
+	$(CC) $(CFLAGS) -c updater.cpp
+
+fileIO.o: fileIO.cpp
 	$(CC) $(CFLAGS) -c fileIO.cpp
 
-randoms.o: randoms.cpp randoms.h
-	$(CC) $(CFLAGS) -c randoms.cpp
-
-BHtree.o: BHtree.cpp BHtree.h
-	$(CC) $(CFLAGS) -c BHtree.cpp
-
-vector_ops.o: vector_ops.cpp vector_ops.h
-	$(CC) $(CFLAGS) -c vector_ops.cpp
-
-force.o: force.cpp force.h
-	$(CC) $(CFLAGS) -c force.cpp
+# .o: .cpp
+# 	$(CC) $(CFLAGS) -c .cpp
 
 .PHONY: clean
 clean:
