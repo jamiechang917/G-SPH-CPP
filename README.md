@@ -1,6 +1,6 @@
 # G-SPH
 
-> Work in Progress
+> Work in Progress ! 
 
 ## Introduction
 This is an implemetaion of the gravitational SPH simulation written in C++. With Barnes-Hut algorithm and GPU acceleration, we are able to simulate the galaxies collision with many particles.
@@ -9,6 +9,7 @@ This is an implemetaion of the gravitational SPH simulation written in C++. With
 
 * g++
 * Python 3 (need `numpy`)
+* CUDA 10+ (if you use GPU iterator)
 
 ### Install PyQT, PyOpenGL
 
@@ -19,12 +20,6 @@ See the guide in the official site.
 $ pip install pyopengl pyqtgraph
 ```
 
-### Install VisPy
-
-* https://vispy.org/installation.html
-```shell
-$ pip install vispy
-```
 ## Download and Compile
 ```shell
 $ git clone https://github.com/jamiechang917/G-SPH-CPP
