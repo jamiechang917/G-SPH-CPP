@@ -5,6 +5,7 @@ void initialize(Node* rootNode) {
     assert(rootNode->isRootNode && "The input Node must be root node.");
     for (Particle* p : rootNode->particles) {
         for (int i = 0; i < 3; i++) {
+            p->acc_old[i] = p->acc[i];
             p->acc[i] = 0.0;
         }
     }
@@ -12,12 +13,12 @@ void initialize(Node* rootNode) {
 }
 
 void move(Node* rootNode) {
-    // update velocity and position
+    // update velocity and position (leapfrog integration)
     assert(rootNode->isRootNode && "The input Node must be root node.");
     for (Particle* p : rootNode->particles) {
         for (int i = 0; i < 3; i++) {
-            p->vel[i] += p->acc[i] * TIMESTEP;
-            p->pos[i] += p->vel[i] * TIMESTEP;
+            p->pos[i] += p->vel[i] * TIMESTEP + 0.5 * p->acc_old[i] * pow(TIMESTEP, 2.0);
+            p->vel[i] += 0.5 * (p->acc_old[i] + p->acc[i]) * TIMESTEP;
         }
     }
     return;

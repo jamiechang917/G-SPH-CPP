@@ -1,13 +1,14 @@
-OBJ = main.o myvector.o particle.o tree.o force.o updater.o fileIO.o
-CC = g++
-CFLAGS = -Wall -Wextra -O2 -g
+OBJ = main.o myvector.o particle.o tree.o force.o updater.o fileIO.o gpuplugin.o
+CC = nvcc
+# CFLAGS = -Wall -Wextra -O2 -g
+CFLAGS = -O2 -g -arch=sm_60 # Require Compute Capability 6.0+
 LFLAGS = -lm
 
 program: $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) -o program  $(LFLAGS)
 
-main.o: main.cpp
-	$(CC) $(CFLAGS) -c main.cpp
+main.o: main.cu
+	$(CC) $(CFLAGS) -c main.cu
 
 myvector.o: myvector.cpp
 	$(CC) $(CFLAGS) -c myvector.cpp
@@ -26,6 +27,9 @@ updater.o: updater.cpp
 
 fileIO.o: fileIO.cpp
 	$(CC) $(CFLAGS) -c fileIO.cpp
+
+gpuplugin.o: gpuplugin.cu
+	$(CC) $(CFLAGS) -c gpuplugin.cu
 
 # .o: .cpp
 # 	$(CC) $(CFLAGS) -c .cpp

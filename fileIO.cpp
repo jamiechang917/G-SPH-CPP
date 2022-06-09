@@ -41,9 +41,28 @@ vector<Particle*> readParticles(string filePath) {
     return particles;
 }
 
-void saveParticles(string filePath, vector<Particle*> particles) {
+void saveParticles(string filePath, vector<Particle*> particles, bool saveEnergies) {
     ofstream ofs(filePath);
-    ofs << particles.size() << endl; // First line is the number of particles.
+    if (saveEnergies) {
+        // Calculate Kinectic and Potential Energy
+        double KE, PE, TE = 0.0;
+        for (Particle* p : particles) {
+            KE += 0.5 * p->mass * (p->vel[0]*p->vel[0] + p->vel[1]*p->vel[1] + p->vel[2]*p->vel[2]);
+            for (Particle* p2 : particles) {
+                if (p2 != p) {
+                    vec3d rVec = vecMinus(p2->pos, p->pos);
+                    double r = vecNorm(rVec);
+                    PE += -CONST_G * p->mass * p2->mass / sqrt(pow(r, 2.0)+pow(SOFTEN_FACTOR, 2.0));
+                }
+            }
+        }
+        PE = PE / 2;
+        TE = KE + PE;
+        ofs << std::fixed << std::setprecision(OUTPUT_PRECISION) << particles.size() << " " << KE << " " << PE << " " << TE << endl;
+    }
+    else {
+        ofs << particles.size() << endl; // First line is the number of particles.
+    }
     for (Particle* p : particles) {
         ofs << p->id << " ";
         ofs << std::fixed << std::setprecision(OUTPUT_PRECISION) << p->mass
@@ -81,7 +100,7 @@ void saveCells(string filePath, Node* rootNode) {
 }
 
 void saveData(Node* rootNode, string outputFolderPath, long frame,
-              bool toSaveParticles, bool toSaveCells) {
+              bool toSaveParticles, bool toSaveCells, bool toSaveEnergies) {
     // save two files: particles_{frame}.txt and cells_{frame}.txt in
     // outputFolderPath for each frame
     char particlesFilePath[100];
@@ -91,7 +110,7 @@ void saveData(Node* rootNode, string outputFolderPath, long frame,
     sprintf(cellsFilePath, "%s/cells_%ld.txt", outputFolderPath.c_str(), frame);
     if (toSaveParticles) {
         cout << "[fileIO] Save particles (frame=" << frame << ")..." << endl;
-        saveParticles(particlesFilePath, rootNode->particles);
+        saveParticles(particlesFilePath, rootNode->particles, toSaveEnergies);
     }
     if (toSaveCells) {
         cout << "[fileIO] Save cells (frame=" << frame << ")..." << endl;

@@ -11,8 +11,9 @@
 using namespace std;
 
 vector<Particle*> readParticles(string filePath);
-void saveParticles(string filePath, vector<Particle*> particles);
+void saveParticles(string filePath, vector<Particle*> particles, bool saveEnergies);
 void saveCells(string filePath, Node* rootNode);
 void saveData(Node* rootNode, string outputFolderPath, long frame,
               bool toSaveParticles,
-              bool toSaveCells); // save data for given frame
+              bool toSaveCells,
+              bool toSaveEnergies); // save data for given frame

@@ -7,10 +7,12 @@ Particle::Particle(long id, double mass) {
     this->pos = {0., 0., 0.};
     this->vel = {0., 0., 0.};
     this->acc = {0., 0., 0.};
+    this->acc_old = {0., 0., 0.};
 }
 
 void Particle::info() {
     cout << "\n[Particle] Particle Information" << endl;
+    cout << "Address:\t" << this << endl;
     cout << "ID:\t\t" << this->id << endl;
     cout << "Mass:\t\t" << this->mass << endl;
     cout << "Position:\t(" << this->pos[0] << ", " << this->pos[1] << ", "
@@ -45,5 +47,15 @@ void Particle::setRandomPosition(double lower, double upper) {
         mt19937 gen(rd());
         uniform_real_distribution<> dist(lower, upper);
         this->pos[i] = dist(gen);
+    }
+}
+
+void Particle::copy(Particle* particle) {
+    this->id = particle->id;
+    this->mass = particle->mass;
+    for (int i=0; i<3; i++) {
+        this->pos[i] = particle->pos[i];
+        this->vel[i] = particle->vel[i];
+        this->acc[i] = particle->acc[i];
     }
 }
